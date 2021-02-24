@@ -93,26 +93,26 @@ client.on('message', message => {
 		const channel = member.guild.channels.cache.find(ch => ch.name === 'bot-test')
 	}
 
-    if (message.channel.name.toLowerCase() === "fan-art") {		
+	       // let hasImage = false;
+		// for (const [_key, attachment] of message.attachments) {
+		// if (message.attachment.name.slice(-3) == "png") {
+		 // 	  hasImage = true;
+    	 	 //         console.log(message.name);
+		 //	  message.react('<:Upbird:770386962098946080>')
+		 //	  .then(() => message.react('<:Downbird:770386982379454504>'))
+		 //	}
+		//}
+		  //   if (!hasImage) {
+		 //	message.delete();
+		// }
+
+        if (message.channel.name.toLowerCase() === "fan-art") {		
 		if (message.attachments.every(attachIsImage)) {
 		message.react('<:Upbird:770386962098946080>')
 		.then(() => message.react('<:Downbird:770386982379454504>'))
 		// .catch(() => console.log('One of the emotes failed to react'));
 		} else {
 		message.delete();
-		}
-
-		let hasImage = false;
-		for (const [_key, attachment] of message.attachments) {
-		if (message.attachment.name.slice(-3) == "png") {
-		 	  hasImage = true;
-    	 	  console.log(message.name);
-		 	  message.react('<:Upbird:770386962098946080>')
-		 	  .then(() => message.react('<:Downbird:770386982379454504>'))
-		 	}
-		}
-		     if (!hasImage) {
-		 	message.delete();
 		}
 
 		function attachIsImage(msgAttach) {
