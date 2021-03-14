@@ -26,7 +26,7 @@ client.on('message', message => {
 		const helpEmbed = new MessageEmbed()
 			.setColor('#FF0000')
 			.setTitle('All commands for DocBot :)')
-			.setDescription("!server&members - To get the server's name and the number of members\n!docbot - To see if DocBot is working\n!creator - To see who is the creator of docassets\n!vote - For polls\n!docbotpfp - to get the .png image of DocBot's pfp");
+			.setDescription("!server&members - To get the server's name and the number of members\n!docbot - To see if DocBot is working\n!creator - To see who is the creator of docassets\n!vote - For polls\n!docbotpfp - to get the .png image of DocBot's pfp\n!nick - to change your nickname");
 		message.channel.send(helpEmbed);
 	}
 	if (message.content.startsWith("!vote")) {
