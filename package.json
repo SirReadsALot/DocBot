@@ -1,13 +1,13 @@
 {
   "name": "docbot",
-  "version": "1.3.0",
+  "version": "1.5.0",
   "description": "this is a bot built with discord.js for the Docassets server!",
   "main": "index.js",
   "scripts": {
-    "test": "npm run"
+    "start": "node index.js"
   },
   "author": "SiReadsALot#3380",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "discord.js": "^12.4.1"
   }

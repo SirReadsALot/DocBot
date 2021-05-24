@@ -26,7 +26,7 @@ client.on('message', message => {
 		const helpEmbed = new MessageEmbed()
 			.setColor('#FF0000')
 			.setTitle('All commands for DocBot :)')
-			.setDescription("**!server&members** - To get the server's name and the number of members\n**!docbot** - To see if DocBot is working\n**!creator** - To see who is the creator of docassets\n**!vote** - For polls\n**!docbotpfp** - to get the .png image of DocBot's pfp\n**!nick** - to change your nickname");
+			.setDescription("!server&members - To get the server's name and the number of members\n!docbot - To see if DocBot is working\n!creator - To see who is the creator of docassets\n!vote - For polls\n!docbotpfp - to get the .png image of DocBot's pfp");
 		message.channel.send(helpEmbed);
 	}
 	if (message.content.startsWith("!vote")) {
@@ -123,6 +123,12 @@ client.on('message', message => {
 		}
 	}
 
+	if (message.channel.name.toLowerCase() === 'suggestions') {
+		// 844942886021627904 channel ID
+		message.react('✅')
+			.then(() => message.react('❎'))
+	}
+	
 	if (message.content.toLowerCase().startsWith("!nick")) {
 		if (!message.guild.me.hasPermission('MANAGE_NICKNAMES')) {
 			return message.channel.send("I don't have permission to change your nickname!");
@@ -131,6 +137,17 @@ client.on('message', message => {
 			message.member.setNickname((args[1]));
 		} 
 }});
+
+client.on("guildMemberAdd", (member) => {
+	console.log(member)
+	const welcomeCha = '844159533647003659';
+	const updatesCha = '841929957467095060';
+	const generalCha = '841929039354003489';
+	const channel = member.guild.channels.cache.get(generalCha);
+	var message = `Welcome <@${member.id}>!, checkout ${member.guild.channels.cache.get(welcomeCha)} for information and ${member.guild.channels.cache.get(updatesCha)} for updates.`;
+
+	channel.send(message)
+})
 
 
 client.login(token)
