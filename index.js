@@ -1,4 +1,4 @@
-const { Client, MessageEmbed } = require('discord.js');
+const { Client, MessageEmbed, GuildMember } = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Client();
 
@@ -145,8 +145,10 @@ client.on("guildMemberAdd", (member) => {
 	const generalCha = '841929039354003489';
 	const channel = member.guild.channels.cache.get(generalCha);
 	var message = `Welcome <@${member.id}>!, checkout ${member.guild.channels.cache.get(welcomeCha)} for information and ${member.guild.channels.cache.get(updatesCha)} for updates.`;
-
 	channel.send(message)
+
+	const joinRole = member.guild.roles.cache.find(role => role.name === "Member")
+	member.roles.add(joinRole)
 })
 
 
