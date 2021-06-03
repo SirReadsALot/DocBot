@@ -140,11 +140,12 @@ client.on('message', message => {
 
 client.on("guildMemberAdd", (member) => {
 	console.log(member)
+	const genAnnouncementsCha = '844944890911522858';
 	const welcomeCha = '844159533647003659';
 	const updatesCha = '841929957467095060';
 	const generalCha = '841929039354003489';
 	const channel = member.guild.channels.cache.get(generalCha);
-	var message = `Welcome <@${member.id}>!, checkout ${member.guild.channels.cache.get(welcomeCha)} for information and ${member.guild.channels.cache.get(updatesCha)} for updates.`;
+	var message = `Welcome <@${member.id}>!, check out ${member.guild.channels.cache.get(welcomeCha)} for information, ${member.guild.channels.cache.get(updatesCha)} for updates and ${member.guild.channels.cache.get(genAnnouncementsCha)} for announcements`;
 	channel.send(message)
 
 	const joinRole = member.guild.roles.cache.find(role => role.name === "Member")
