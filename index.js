@@ -44,7 +44,9 @@ client.on('message', message => {
 });
 client.on('message', message => {
 	if (message.content.startsWith("!clear")) {
-		if (message.member.roles.cache.has("770158995523633223") || message.member.roles.cache.has("770157857852620810") || message.member.roles.cache.has("770315598692352062") || message.member.roles.cache.has("801470153279668284")) { // the first 2 roles are in Docassets.
+		if (message.member.roles.cache.has("770158995523633223") || message.member.roles.cache.has("770157857852620810") 
+		|| message.member.roles.cache.has("770315598692352062") || message.member.roles.cache.has("801470153279668284")
+		|| message.member.roles.cache.has('845661418904616982') || message.member.roles.cache.has('844910059087593473')) { // the first 2 roles are in Docassets.
 			const args = message.content.split(" ")
 			const amount = parseInt(args[1]);
 
@@ -55,6 +57,7 @@ client.on('message', message => {
 					console.error(err);
 					message.channel.send('There was an error trying to clear the messages in this channel.');
 				})
+				message.channel.send("Deleted messages.")
 			}
 		} else {
 			message.channel.send("Sorry, you're not a Moderator/Admin to use this command");
@@ -63,50 +66,49 @@ client.on('message', message => {
 	if (message.content === `${prefix}docbotpfp`) {
 		message.channel.send("https://media.discordapp.net/attachments/800415005950083098/801499263284674670/DocBot_Profile.png")
 	}
-	if (message.member.roles.cache.has("770158995523633223") || message.member.roles.cache.has("770157857852620810") || message.member.roles.cache.has("770315598692352062")) {
+	if (message.member.roles.cache.has("770158995523633223") || message.member.roles.cache.has("770157857852620810") 
+	|| message.member.roles.cache.has("770315598692352062") || message.member.roles.cache.has("845661418904616982")
+	|| message.member.roles.cache.has("844910059087593473")) {
 		if (message.content.toLowerCase().startsWith("!mute")) {
+			const args = message.content.split(" ");
 			const person_muted = message.mentions.members.first() || message.guild.roles.cache.get(args[1])
 			if (!person_muted) {
 				return message.reply("Couldn't find the person!")
 			}
 
-			let muted_role = message.guild.roles.cache.find(role => role.name === "MUTED")
+			let muted_role = message.guild.roles.cache.find(role => role.name === "Muted")
 			if (!muted_role) {
 				return message.reply("Couldn't find the role!")
 			}
-			let mute_time = args[2];
+			let mute_time = parseInt(args[2]);
 			if (!mute_time) {
 				return message.reply("You didn't specify the mute duration!")
 			}
 
 			person_muted.roles.remove(muted_role.id);
 			person_muted.roles.add(muted_role.id)
-			message.channel.send(`@${person_muted.user.tag} has been muted for ${ms(ms(mute_time))}`)
-			setTimeout(function () {
+			message.channel.send(`<@!${person_muted.user.id}> has been muted for ${mute_time} seconds`)
+			setTimeout(() => {
 				person_muted.roles.add(muted_role.id)
 				person_muted.roles.remove(muted_role.id)
-			}, ms(time))
+			}, mute_time * 60 * 1000 //ms(time))
+		)}
+		
+		if (message.content.toLowerCase().startsWith("!unmute")) {
+			const args = message.content.split(" ");
+			const person_muted = message.mentions.members.first() || message.guild.roles.cache.get(args[1])
+			if (!person_muted) {
+				return message.reply("Couldn't find the person!")
+			}
+			let muted_role = message.guild.roles.cache.find(role => role.name === "Muted")
+			if (!muted_role) {
+				return message.reply("Couldn't find the role!")
+			}
+			person_muted.roles.remove(muted_role.id);
 		}
 	}
-	if (message.content.startsWith(`${prefix}report`)) {
-		message.channel.send(`🚨 the staff have been reported, ${message.author}`)
-		const channel = member.guild.channels.cache.find(ch => ch.name === 'bot-test')
-	}
 
-	// let hasImage = false;
-	// for (const [_key, attachment] of message.attachments) {
-	// if (message.attachment.name.slice(-3) == "png") {
-	//  	  hasImage = true;
-	//  	  console.log(message.name);
-	//  	  message.react('<:Upbird:770386962098946080>')
-	//  	  .then(() => message.react('<:Downbird:770386982379454504>'))
-	//  	}
-	// }
-	//      if (!hasImage) {
-	//  	message.delete();
-	// }
-
-	if (message.channel.name.toLowerCase() === "fan-art") {
+	if (message.channel.name.toLowerCase() === "fan-art" || message.channel.name.toLowerCase() === 'misc-art') {
 		if (message.attachments.every(attachIsImage)) {
 			message.react('<:Upbird:770386962098946080>')
 				.then(() => message.react('<:Downbird:770386982379454504>'))
@@ -123,11 +125,15 @@ client.on('message', message => {
 		}
 	}
 
-	if (message.channel.name.toLowerCase() === 'suggestions') {
-		// 844942886021627904 channel ID
-		message.react('✅')
-			.then(() => message.react('❎'))
-	}
+	// if (message.channel.name.toLowerCase() === 'misc-art') {
+	// 	if (message.attachments.every(attachIsImage)) {
+	// 		// 844942886021627904 channel ID
+	// 		message.react('✅')
+	// 			.then(() => message.react('❎'))
+	// 	} else {
+	// 		message.delete();
+	// 	}
+	// }
 	
 	if (message.content.toLowerCase().startsWith("!nick")) {
 		if (!message.guild.me.hasPermission('MANAGE_NICKNAMES')) {
@@ -135,7 +141,7 @@ client.on('message', message => {
 		} else {
 			const args = message.content.split(" ");
 			message.member.setNickname((args[1]));
-		} 
+		}
 }});
 
 client.on("guildMemberAdd", (member) => {
