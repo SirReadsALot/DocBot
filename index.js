@@ -24,9 +24,9 @@ client.on('message', message => {
 	}
 	if (message.content === `${prefix}help`) {
 		const helpEmbed = new MessageEmbed()
-			.setColor('#FF0000')
+			.setColor('#09F1E3')
 			.setTitle('All commands for DocBot :)')
-			.setDescription("!server&members - To get the server's name and the number of members\n!docbot - To see if DocBot is working\n!creator - To see who is the creator of docassets\n!vote - For polls\n!docbotpfp - to get the .png image of DocBot's pfp");
+			.setDescription("!server&members - To get the server's name and the number of members\n!docbot - To see if DocBot is working\n!creator - To see who is the creator of docassets\n!vote - For polls\n!docbotpfp - to get the .png image of DocBot's pfp\n!nick - for changing nicknames");
 		message.channel.send(helpEmbed);
 	}
 	if (message.content.startsWith("!vote")) {
@@ -36,9 +36,9 @@ client.on('message', message => {
 	}
 	if (message.content === `${prefix}news`) {
 		const BotNews = new MessageEmbed()
-			.setColor('#0099ff')
-			.setTitle('DocBot v1.3 has been released!')
-			.setDescription("Hello everyone!\nDocBot v1.3 has been released and it has some fixes and more stuff!\n¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬\n __**Information**__\nChanges:\n1)!art command has been changed to !vote\n2)~~DocBot now reacts with Upbird and Downbird in #fan-art without any usage of commands~~\n3)!clear command has been added for the staff members\n**Bug fixes**:\nDocBot is not bugged anymore! the bug has been fixed and the restrictions have been lifted\nHave a nice day!")
+			.setColor('#09F1E3')
+			.setTitle('DocBot v1.6 has been released!')
+			.setDescription("Hello everyone!\nDocBot v1.6 has been released and it has some stuff!\n¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬\n __**Information**__\nChanges:\n1)!mute command added (but not finished)\n2)!nick command added to change your nicknames\n3)DocBot now welcomes people when they join the server\nHave a nice day!")
 		message.channel.send(BotNews);
 	}
 });
@@ -124,16 +124,6 @@ client.on('message', message => {
 			return url.indexOf("png", url.length - "png".length /*or 3*/) !== -1;
 		}
 	}
-
-	// if (message.channel.name.toLowerCase() === 'misc-art') {
-	// 	if (message.attachments.every(attachIsImage)) {
-	// 		// 844942886021627904 channel ID
-	// 		message.react('✅')
-	// 			.then(() => message.react('❎'))
-	// 	} else {
-	// 		message.delete();
-	// 	}
-	// }
 	
 	if (message.content.toLowerCase().startsWith("!nick")) {
 		if (!message.guild.me.hasPermission('MANAGE_NICKNAMES')) {
@@ -158,5 +148,16 @@ client.on("guildMemberAdd", (member) => {
 	member.roles.add(joinRole)
 })
 
+client.on("guildMemberAdd", (member) => {
+	console.log(member)
+	const generalCha = '770313300746567739';
+	const changelogCha = '770150067448578068';
+	const announcementsChaD = '770150048851820575';
+	const rulesChaD = '770148878514651176';
+	const channel = member.guild.channels.cache.get(generalCha);
+	var message = `Welcome <@${member.id}> to the Official Docassets server! check out ${member.guild.channels.cache.get(changelogCha)} for changes in the extension
+	and ${member.guild.channels.cache.get(announcementsChaD)} for announcements! Oh and also don't forgot to read the ${member.guild.channels.cache.get(rulesChaD)}`;
+	channel.send(message)
+})
 
 client.login(token)
