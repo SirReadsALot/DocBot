@@ -1,4 +1,4 @@
-const { Client, MessageEmbed, GuildMember } = require('discord.js');
+const { Client, MessageEmbed, GuildMember, NewsChannel } = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Client();
 
@@ -26,7 +26,17 @@ client.on('message', message => {
 		const helpEmbed = new MessageEmbed()
 			.setColor('#09F1E3')
 			.setTitle('All commands for DocBot :)')
-			.setDescription("!server&members - To get the server's name and the number of members\n!docbot - To see if DocBot is working\n!creator - To see who is the creator of docassets\n!vote - For polls\n!docbotpfp - to get the .png image of DocBot's pfp\n!nick - for changing nicknames");
+			.setDescription(`!server&members - To get the server's name and the number of members\n
+			!docbot - To see if DocBot is working\n
+			!creator - To see who is the creator of docassets\n
+			!vote - For polls\n
+			!docbotpfp - to get the .png image of DocBot's pfp\n
+			!nick - for changing nickname\n
+			!nickreset - for resetting your nickname\n
+			**¬¬¬¬¬¬¬ FOR STAFF ¬¬¬¬¬¬¬**\n
+			!mute - for muting members\n
+			!unmute - for unmuting members\n
+			!clear - for clearing messages`);
 		message.channel.send(helpEmbed);
 	}
 	if (message.content.startsWith("!vote")) {
@@ -131,7 +141,16 @@ client.on('message', message => {
 		} else {
 			const args = message.content.split(" ");
 			message.member.setNickname((args[1]));
-		}
+			message.channel.send(`Your nickname has been changed to ${args[1]}.`)
+		} 
+	if (message.content.toLowerCase().startsWith("!nickreset")) {
+		if (!message.guild.me.hasPermission('MANAGE_NICKNAMES')) {
+			return message.channel.send("I don't have permission to change your nickname!");
+		} else {
+			message.member.setNickname(null)
+			message.channel.send("Your nickname has been reset.")
+		} 
+	}
 }});
 
 client.on("guildMemberAdd", (member) => {
