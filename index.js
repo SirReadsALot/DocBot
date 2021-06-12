@@ -153,6 +153,7 @@ client.on('message', message => {
 	}
 }});
 
+// FOR DEEEEP.IO DESKTOP CLIENT SERVER
 client.on("guildMemberAdd", (member) => {
 	console.log(member)
 	const genAnnouncementsCha = '844944890911522858';
@@ -167,16 +168,16 @@ client.on("guildMemberAdd", (member) => {
 	member.roles.add(joinRole)
 })
 
+// FOR DOCASSETS SERVER
 client.on("guildMemberAdd", (member) => {
 	console.log(member)
-	const generalCha = '770313300746567739';
-	const changelogCha = '770150067448578068';
+	const changelogChaD = '770150067448578068';
 	const announcementsChaD = '770150048851820575';
 	const rulesChaD = '770148878514651176';
-	const channel = member.guild.channels.cache.get(generalCha);
-	var message = `Welcome <@${member.id}> to the Official Docassets server! check out ${member.guild.channels.cache.get(changelogCha)} for changes in the extension
+	const channel = message.guild.channels.cache.find(channel => channel.name === "general")
+	var messageDoc = `Welcome <@${member.id}> to the Official Docassets server! check out ${member.guild.channels.cache.get(changelogChaD)} for changes in the extension
 	and ${member.guild.channels.cache.get(announcementsChaD)} for announcements! Oh and also don't forgot to read the ${member.guild.channels.cache.get(rulesChaD)}`;
-	channel.send(message)
+	channel.send(messageDoc)
 })
 
 client.login(token)
