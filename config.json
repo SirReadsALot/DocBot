@@ -1,4 +1,5 @@
 {
     "prefix":"!",
+    "secret_prefix": ">!",
     "token":""
 }

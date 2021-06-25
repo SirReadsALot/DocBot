@@ -1,5 +1,5 @@
 const { Client, MessageEmbed, GuildMember, NewsChannel } = require('discord.js');
-const { prefix, token } = require('./config.json');
+const { prefix, secret_prefix ,token } = require('./config.json');
 const client = new Client();
 
 client.once('ready', () => {
@@ -44,11 +44,11 @@ client.on('message', message => {
 			.then(() => message.react('<:Downbird:770386982379454504>'))
 			.catch(() => console.log('One of the emotes failed to react'));
 	}
-	if (message.content === `${prefix}news`) {
+	if (message.content === `${secret_prefix}news`) {
 		const BotNews = new MessageEmbed()
 			.setColor('#09F1E3')
-			.setTitle('DocBot v1.6 has been released!')
-			.setDescription("Hello everyone!\nDocBot v1.6 has been released and it has some stuff!\n¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬\n __**Information**__\nChanges:\n1)!mute command added (but not finished)\n2)!nick command added to change your nicknames\n3)DocBot now welcomes people when they join the server\nHave a nice day!")
+			.setTitle('DocBot v1.7 has been released!')
+			.setDescription("Hello everyone!\nDocBot v1.7 has been released and it has some stuff!\n¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬\n __**Information**__\nChanges:\n1)!mute command added (but not finished)\n2)!nick command added to change your nicknames\n3)DocBot now welcomes people when they join the server\nHave a nice day!")
 		message.channel.send(BotNews);
 	}
 });
@@ -65,9 +65,9 @@ client.on('message', message => {
 			} else if (amount < 40) {
 				message.channel.bulkDelete(amount, true).catch(err => {
 					console.error(err);
-					message.channel.send('There was an error trying to clear the messages in this channel.');
+					// message.channel.send('There was an error trying to clear the messages in this channel.');
 				})
-				message.channel.send("Deleted messages.")
+				// message.channel.send("Deleted messages.")
 			}
 		} else {
 			message.channel.send("Sorry, you're not a Moderator/Admin to use this command");
@@ -118,7 +118,7 @@ client.on('message', message => {
 		}
 	}
 
-	if (message.channel.name.toLowerCase() === "fan-art" || message.channel.name.toLowerCase() === 'misc-art') {
+	if (message.channel.name.toLowerCase() === "fan-art" || message.channel.name.toLowerCase() === 'misc-art' ) {
 		if (message.attachments.every(attachIsImage)) {
 			message.react('<:Upbird:770386962098946080>')
 				.then(() => message.react('<:Downbird:770386982379454504>'))
@@ -151,10 +151,21 @@ client.on('message', message => {
 			message.channel.send("Your nickname has been reset.")
 		} 
 	}
+	if (message.content == `${prefix}docassets`) {
+		const docassetsWebstore = new MessageEmbed()
+		.setColor('#09F1E3')
+		.setTitle('Docassets webstore link')
+		.setDescription(`https://chrome.google.com/webstore/detail/doctorpus-assets/cmlbeiacmcbdiepcenjmhmkclmffbgbd?utm_source=chrome-ntp-icon`);
+	message.channel.send(docassetsWebstore);
+	}
+	if (message.content == `${secret_prefix}ping`) {
+		const moto = "607163850243964939"
+		message.channel.send(`<@!${moto}> hi`)
+	}
 }});
 
 // FOR DEEEEP.IO DESKTOP CLIENT SERVER
-client.on("guildMemberAdd", (member) => {
+/*client.on("guildMemberAdd", (member) => {
 	console.log(member)
 	const genAnnouncementsCha = '844944890911522858';
 	const welcomeCha = '844159533647003659';
@@ -179,5 +190,5 @@ client.on("guildMemberAdd", (member) => {
 	and ${member.guild.channels.cache.get(announcementsChaD)} for announcements! Oh and also don't forgot to read the ${member.guild.channels.cache.get(rulesChaD)}`;
 	channel.send(messageDoc)
 })
-
+*/
 client.login(token)
