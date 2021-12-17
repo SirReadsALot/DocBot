@@ -4,4 +4,4 @@
   <img src="./docbot.png">
 </p>
 
-## A Discord bot built with discord.js for the docassets server!
+A Discord bot built with discord.js for the docassets server!
