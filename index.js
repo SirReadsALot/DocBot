@@ -1,9 +1,12 @@
-const { Client, MessageEmbed, GuildMember, NewsChannel } = require('discord.js');
-const { prefix, secret_prefix ,token } = require('./config.json');
+const { Client, MessageEmbed, GuildMember, NewsChannel, User } = require('discord.js');
+const chalk = require("chalk")
+const { prefix, token } = require('./config.json');
 const client = new Client();
 
 client.once('ready', () => {
-	console.log("DocBot is ready!")
+	const time = new Date()
+	console.log(chalk.cyan(`[${time}] [INFO]`))
+	console.log(chalk.yellow("DocBot has been activated!"))
 });
 
 client.on('message', message => {
@@ -33,6 +36,7 @@ client.on('message', message => {
 			!docbotpfp - to get the .png image of DocBot's pfp\n
 			!nick - for changing nickname\n
 			!nickreset - for resetting your nickname\n
+			!docassets - to get link for installing docassets\n
 			**¬¬¬¬¬¬¬ FOR STAFF ¬¬¬¬¬¬¬**\n
 			!mute - for muting members\n
 			!unmute - for unmuting members\n
@@ -44,7 +48,7 @@ client.on('message', message => {
 			.then(() => message.react('<:Downbird:770386982379454504>'))
 			.catch(() => console.log('One of the emotes failed to react'));
 	}
-	if (message.content === `${secret_prefix}news`) {
+	if (message.content === `${prefix}news`) {
 		const BotNews = new MessageEmbed()
 			.setColor('#09F1E3')
 			.setTitle('DocBot v1.7 has been released!')
@@ -140,10 +144,12 @@ client.on('message', message => {
 			return message.channel.send("I don't have permission to change your nickname!");
 		} else {
 			const args = message.content.split(" ");
-			message.member.setNickname((args[1]));
-			message.channel.send(`Your nickname has been changed to ${args[1]}.`)
+			args.shift()
+			const nickname = args.join(" ")
+			message.member.setNickname(nickname);
+			message.channel.send(`Your nickname has been changed to ${nickname}.`)
 		} 
-	if (message.content.toLowerCase().startsWith("!nickreset")) {
+	if (message.content.toLowerCase().startsWith("!nick reset")) {
 		if (!message.guild.me.hasPermission('MANAGE_NICKNAMES')) {
 			return message.channel.send("I don't have permission to change your nickname!");
 		} else {
@@ -156,13 +162,14 @@ client.on('message', message => {
 		.setColor('#09F1E3')
 		.setTitle('Docassets webstore link')
 		.setDescription(`https://chrome.google.com/webstore/detail/doctorpus-assets/cmlbeiacmcbdiepcenjmhmkclmffbgbd?utm_source=chrome-ntp-icon`);
-	message.channel.send(docassetsWebstore);
+		message.channel.send(docassetsWebstore).catch(err => {
+			console.error(err)
+		})
 	}
-	if (message.content == `${secret_prefix}ping`) {
-		const moto = "607163850243964939"
-		message.channel.send(`<@!${moto}> hi`)
-	}
+    // message.lineReply("linereply linereply"); //Line (Inline) Reply with mention
+    // message.lineReplyNoMention(`My name is ${client.user.username}`); //Line (Inline) Reply without mention
 }});
+
 
 // FOR DEEEEP.IO DESKTOP CLIENT SERVER
 /*client.on("guildMemberAdd", (member) => {
